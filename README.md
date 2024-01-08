@@ -1,6 +1,12 @@
 # Limon Chat App
 
 
+### --> Ekşi muhabbetlerden sıkıldığında, tatlı içeriklerle ve oyunlarla keyifli anlar yaşayarak canlanabilirsin. <--
+
+Giriş ve kayıt sayfalarını başarıyla tasarladım ve şimdi Firebase entegrasyonu ile uygulamanın işlevselliğini güçlendirmeye hazırlanıyorum. Ayrıca, block pattern uygulamalarını kullanarak kullanıcı deneyimini daha etkileyici hale getirmeyi hedefliyorum. Amacım, kullanıcı dostu bir tasarım anlayışıyla estetik ve kullanıcı odaklı bir arayüz oluşturarak eğlenceli bir sohbet uygulaması ortaya çıkarmak. 
+
+
+## Gelişmeleri takip etmeyi unutmayın! 🍋🎆🚀
 
 
 
