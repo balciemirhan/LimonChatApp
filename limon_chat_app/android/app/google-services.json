@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "86339380337",
+    "project_id": "lemonchatapp-b6ddc",
+    "storage_bucket": "lemonchatapp-b6ddc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86339380337:android:b1ab86f5e264ba97eda7d0",
+        "android_client_info": {
+          "package_name": "com.example.limon_chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkm9Joj-Ae_WynHBIknVFBIPzO0P5ozIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

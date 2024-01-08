@@ -6,7 +6,9 @@ import 'package:limon_chat_app/config/constant/themes/text_style.dart';
 import 'package:limon_chat_app/pages/login/login_form.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key, this.onTap}) : super(key: key);
+
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class LoginPage extends StatelessWidget {
                       style: AppTextStyle.notMember,
                     ),
                     InkWell(
-                      onTap: () => Navigator.of(context).pushNamed("/register"),
+                      onTap: onTap,
                       child: const Text(
                         AppText.registerNow,
                         style: AppTextStyle.registerNow,
@@ -80,6 +82,12 @@ Widget loginButton(
       bool result = formkey.currentState!.validate();
       if (result) {
         formkey.currentState!.save();
+        /*  login(index)(context);  */
+        Navigator.of(context).pushNamed("/home");
+
+        // Form geçerliyse, verileri gönderin.
+        // submit butonu ile backEnd'e kaydedip verileri göndereceğim.
+        // submit();
       }
     },
     child: NeuBox(

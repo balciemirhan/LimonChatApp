@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:limon_chat_app/auth/auth_service.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
 import 'package:limon_chat_app/widgets/my_textformfield.dart';
 
@@ -11,6 +12,28 @@ class LoginForm extends StatelessWidget {
   final GlobalKey<FormState> formkey;
 
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  // login method
+  Future<void> login(BuildContext context) async {
+    // giriş düğmesine tıkladığımızda yapmak istediklerimiz:
+    // get auth service:
+
+    final authService = AuthService();
+
+    // try login
+
+    try {
+      authService.signInWithEmailAndPassword(
+          emailController.text, passwordController.text);
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(title: Text(e.toString())),
+      );
+    }
+    // catch any errors
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,38 +59,38 @@ class LoginForm extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget buildPasswordFormField() {
-  bool isPasswordVisible = true;
-  final TextEditingController passwordController = TextEditingController();
-  return StatefulBuilder(
-    builder: (context, setState) {
-      return MyTextFormField(
-        controller: passwordController,
-        hintText: AppText.password,
-        prefixIcon: const Icon(Icons.lock_outline),
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(
-              () {
-                isPasswordVisible = !isPasswordVisible;
-              },
-            );
+  Widget buildPasswordFormField() {
+    bool isPasswordVisible = true;
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return MyTextFormField(
+          controller: passwordController, // Use the controller here
+          hintText: AppText.password,
+          prefixIcon: const Icon(Icons.lock_outline),
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(
+                () {
+                  isPasswordVisible = !isPasswordVisible;
+                },
+              );
+            },
+            icon: isPasswordVisible
+                ? const Icon(Icons.visibility_off_outlined)
+                : const Icon(Icons.visibility_outlined),
+          ),
+          obscureText: isPasswordVisible,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return AppText.validPassword;
+            }
+            return null;
           },
-          icon: isPasswordVisible
-              ? const Icon(Icons.visibility_off_outlined)
-              : const Icon(Icons.visibility_outlined),
-        ),
-        obscureText: isPasswordVisible,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return AppText.validPassword;
-          }
-          return null;
-        },
-        keyboardType: TextInputType.visiblePassword,
-      );
-    },
-  );
+          keyboardType: TextInputType.visiblePassword,
+        );
+      },
+    );
+  }
 }

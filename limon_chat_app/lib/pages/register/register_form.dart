@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:limon_chat_app/auth/auth_service.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
 import 'package:limon_chat_app/widgets/my_textformfield.dart';
 
@@ -10,6 +11,31 @@ class RegisterForm extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+
+  // register method
+
+  Future<void> register(BuildContext context) async {
+    // kayıt düğmesine tıkladığımızda yapmak istediklerimiz:
+    // get auth service:
+
+    final AuthService authService = AuthService();
+
+// şifremiz ve onaylanmış olan şifremiz eşleşirse o zaman kayıt olma işlemi gerçekleşsin.:
+    if (passwordController.text == confirmPasswordController.text) {
+      try {
+        authService.signInWithEmailAndPassword(
+            emailController.text, passwordController.text);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
