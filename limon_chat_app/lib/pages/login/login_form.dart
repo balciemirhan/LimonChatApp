@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:limon_chat_app/auth/auth_service.dart';
+import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
+
 import 'package:limon_chat_app/config/constant/themes/text.dart';
+
+import 'package:limon_chat_app/widgets/auth_button.dart';
 import 'package:limon_chat_app/widgets/my_textformfield.dart';
 
 class LoginForm extends StatelessWidget {
-  LoginForm({
+   LoginForm({
     Key? key,
     required this.formkey,
   }) : super(key: key);
@@ -12,6 +16,7 @@ class LoginForm extends StatelessWidget {
   final GlobalKey<FormState> formkey;
 
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
   // login method
@@ -24,7 +29,7 @@ class LoginForm extends StatelessWidget {
     // try login
 
     try {
-      authService.signInWithEmailAndPassword(
+      await authService.signInWithEmailAndPassword(
           emailController.text, passwordController.text);
     } catch (e) {
       showDialog(
@@ -55,6 +60,14 @@ class LoginForm extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           buildPasswordFormField(),
+          Padding(
+            padding: EdgeInsets.only(
+                top: AppScreenSize.screenSize(context).height / 8),
+            child: AuthButton(
+                formKey: formkey,
+                auth: (context) => login(context),
+                buttonString: AppText.loginButtonTitle),
+          ),
         ],
       ),
     );
@@ -93,4 +106,38 @@ class LoginForm extends StatelessWidget {
       },
     );
   }
+
+/*   Widget buildLoginButton(
+    BuildContext context,
+    GlobalKey<FormState> formkey,
+    String buttonText,
+  ) {
+    return GestureDetector(
+      onTap: () {
+        bool result = formkey.currentState!.validate();
+        if (result) {
+          formkey.currentState!.save();
+          login(context);
+
+          /*  Navigator.of(context).pushNamed("/home");
+ */
+          // Form geçerliyse, verileri gönderin.
+          // submit butonu ile backEnd'e kaydedip verileri göndereceğim.
+          // submit();
+        }
+      },
+      child: NeuBox(
+        width: AppScreenSize.screenSize(context).width * 0.8,
+        height: AppScreenSize.screenSize(context).height * 0.08,
+        child: Container(
+          child: Center(
+            child: Text(
+              buttonText,
+              style: AppTextStyle.body1,
+            ),
+          ),
+        ),
+      ),
+    );
+  } */
 }

@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:limon_chat_app/auth/auth_service.dart';
+import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
+import 'package:limon_chat_app/widgets/auth_button.dart';
 import 'package:limon_chat_app/widgets/my_textformfield.dart';
 
-class RegisterForm extends StatelessWidget {
-  RegisterForm({Key? key, required this.formkey}) : super(key: key);
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({Key? key, required this.formkey}) : super(key: key);
   final GlobalKey<FormState> formkey;
 
+  @override
+  State<RegisterForm> createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
   // register method
-
   Future<void> register(BuildContext context) async {
     // kayıt düğmesine tıkladığımızda yapmak istediklerimiz:
     // get auth service:
@@ -23,7 +31,7 @@ class RegisterForm extends StatelessWidget {
 // şifremiz ve onaylanmış olan şifremiz eşleşirse o zaman kayıt olma işlemi gerçekleşsin.:
     if (passwordController.text == confirmPasswordController.text) {
       try {
-        authService.signInWithEmailAndPassword(
+        authService.createUserWithEmailAndPassword(
             emailController.text, passwordController.text);
       } catch (e) {
         showDialog(
@@ -34,12 +42,13 @@ class RegisterForm extends StatelessWidget {
         );
       }
     }
+    Navigator.of(context).pushNamed("/loginOrRegister");
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formkey,
+      key: widget.formkey,
       child: Column(
         children: [
           MyTextFormField(
@@ -80,6 +89,14 @@ class RegisterForm extends StatelessWidget {
               return null;
             },
           ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: AppScreenSize.screenSize(context).height / 8),
+            child: AuthButton(
+                formKey: widget.formkey,
+                auth: (context) => register(context),
+                buttonString: AppText.registerButtonTitle),
+          )
         ],
       ),
     );

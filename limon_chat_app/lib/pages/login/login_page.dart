@@ -3,17 +3,28 @@ import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
 import 'package:limon_chat_app/config/constant/themes/neu_box.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
 import 'package:limon_chat_app/config/constant/themes/text_style.dart';
+
 import 'package:limon_chat_app/pages/login/login_form.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key, this.onTap}) : super(key: key);
 
   final void Function()? onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
+  State<LoginPage> createState() => _LoginPageState();
+}
 
+class _LoginPageState extends State<LoginPage> {
+  late GlobalKey<FormState> formKey;
+  @override
+  void initState() {
+    super.initState();
+    formKey = GlobalKey<FormState>();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -32,6 +43,7 @@ class LoginPage extends StatelessWidget {
                       fit: BoxFit.cover),
                 ),
               ),
+
               Padding(
                 padding: EdgeInsets.only(
                     top: AppScreenSize.screenSize(context).height / 8),
@@ -39,11 +51,14 @@ class LoginPage extends StatelessWidget {
               ),
 
               // login Button
-              Padding(
+              /*        Padding(
                 padding: EdgeInsets.only(
                     top: AppScreenSize.screenSize(context).height / 8),
-                child: loginButton(context, formKey, AppText.loginButtonTitle),
-              ),
+                child: LoginButton(
+                  buttonText: "sadjuyfvuysdtf",
+                  formkey: formKey,
+                ),
+              ), */
 
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -55,7 +70,9 @@ class LoginPage extends StatelessWidget {
                       style: AppTextStyle.notMember,
                     ),
                     InkWell(
-                      onTap: onTap,
+                      onTap: () {
+                        widget.onTap!();
+                      },
                       child: const Text(
                         AppText.registerNow,
                         style: AppTextStyle.registerNow,
@@ -72,7 +89,7 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-Widget loginButton(
+/*  Widget loginButton(
   BuildContext context,
   GlobalKey<FormState> formkey,
   String buttonText,
@@ -82,7 +99,7 @@ Widget loginButton(
       bool result = formkey.currentState!.validate();
       if (result) {
         formkey.currentState!.save();
-        /*  login(index)(context);  */
+
         Navigator.of(context).pushNamed("/home");
 
         // Form geçerliyse, verileri gönderin.
@@ -104,3 +121,4 @@ Widget loginButton(
     ),
   );
 }
+  */

@@ -1,10 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
 import 'package:limon_chat_app/config/constant/themes/text_style.dart';
-import 'package:limon_chat_app/pages/login/login_page.dart';
 import 'package:limon_chat_app/pages/register/register_form.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -13,8 +9,10 @@ class RegisterPage extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  final formKey = GlobalKey<FormState>();
   final void Function()? onTap;
+
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,12 +55,13 @@ class RegisterPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   RegisterForm(formkey: formKey),
-                  Padding(
+
+                  /*    Padding(
                     padding: EdgeInsets.only(
                         top: AppScreenSize.screenSize(context).height / 8),
-                    child: loginButton(
-                        context, formKey, AppText.registerButtonTitle),
-                  ),
+                    child: LoginButton(
+                        formkey: formKey, buttonText: "SDJKFBIYUSDF"),
+                  ), */
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Row(

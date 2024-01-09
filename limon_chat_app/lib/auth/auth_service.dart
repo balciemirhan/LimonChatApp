@@ -1,6 +1,7 @@
 // service
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthService {
   // instance of auth (tüm işlevselliğe sahip olacağız)
@@ -18,13 +19,13 @@ class AuthService {
           email: email, password: password);
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      throw Exception(e);
     }
   }
 
   // sign up
 
-  Future<UserCredential> signUpWithEmailAndPassword(
+  Future<UserCredential> createUserWithEmailAndPassword(
       String email, String password) async {
     try {
       UserCredential userCredential = await _auth
@@ -35,10 +36,12 @@ class AuthService {
     }
   }
 
-  // sign out
+  // sign out  
 
-  Future<void> signOut() async {
-    return await _auth.signOut();
+  Future<void> signOut(context) async {
+    return await _auth
+        .signOut()
+        .then((value) => Navigator.of(context).pushNamed("/loginOrRegister"));
   }
 
   // errors
