@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:limon_chat_app/auth/google_authentication.dart';
 import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
 import 'package:limon_chat_app/config/constant/themes/neu_box.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
 import 'package:limon_chat_app/config/constant/themes/text_style.dart';
-
 import 'package:limon_chat_app/pages/login/login_form.dart';
+import 'package:limon_chat_app/widgets/square_auth_button.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, this.onTap}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  LoginPage({Key? key, this.onTap}) : super(key: key);
 
   final void Function()? onTap;
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  late GlobalKey<FormState> formKey;
-  @override
-  void initState() {
-    super.initState();
-    formKey = GlobalKey<FormState>();
-  }
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +41,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: LoginForm(formkey: formKey),
               ),
 
-              // login Button
-              /*        Padding(
-                padding: EdgeInsets.only(
-                    top: AppScreenSize.screenSize(context).height / 8),
-                child: LoginButton(
-                  buttonText: "sadjuyfvuysdtf",
-                  formkey: formKey,
-                ),
-              ), */
+              // Square Auth Button
+
+              // GoogleAuthentication --> kimlik doğrulama hizmeti.
+              SquareAuthButton(
+                onTap: () => GoogleAuthentication().signInWithGoogle(),
+                imagePath: "assets/images/chat.png",
+              ),
 
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -71,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        widget.onTap!();
+                        onTap!();
                       },
                       child: const Text(
                         AppText.registerNow,

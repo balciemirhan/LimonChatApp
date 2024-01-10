@@ -17,7 +17,7 @@ final class AppRoute {
   static const String home = "/home";
 
   static Map<String, AppRouteMapFunction> routes = {
-    login: (context) => const LoginPage(),
+    login: (context) => LoginPage(),
     register: (context) => RegisterPage(),
     loginOrRegister: (context) => const LoginOrRegister(),
     authGate: (context) => const AuthGate(),

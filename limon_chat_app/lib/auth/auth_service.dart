@@ -36,7 +36,7 @@ class AuthService {
     }
   }
 
-  // sign out  
+  // sign out
 
   Future<void> signOut(context) async {
     return await _auth
@@ -45,4 +45,6 @@ class AuthService {
   }
 
   // errors
+
+  // Google Authentication sign in
 }
