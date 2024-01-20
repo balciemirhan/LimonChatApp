@@ -5,7 +5,7 @@ class NeuBox extends StatelessWidget {
   const NeuBox({Key? key, required this.child, this.width, this.height})
       : super(key: key);
 
-  final child;
+  final Widget child;
   final double? width;
   final double? height;
   @override

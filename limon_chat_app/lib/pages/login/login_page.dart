@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:limon_chat_app/auth/google_authentication.dart';
+import 'package:limon_chat_app/services/auth/google_authentication.dart';
 import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
 import 'package:limon_chat_app/config/constant/themes/neu_box.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
@@ -22,9 +22,10 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(
-              top: AppScreenSize.screenSize(context).height / 5),
+              top: AppScreenSize.screenSize(context).height / 8),
           child: Column(
             children: [
+              // -------------------- LOGO --------------------
               Center(
                 child: NeuBox(
                   width: AppScreenSize.screenSize(context).height / 7,
@@ -35,22 +36,57 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
+              // -------------------- FORM --------------------
+
               Padding(
                 padding: EdgeInsets.only(
-                    top: AppScreenSize.screenSize(context).height / 8),
+                    top: AppScreenSize.screenSize(context).height / 12),
                 child: LoginForm(formkey: formKey),
               ),
 
-              // Square Auth Button
+              // -------------------- Divider --------------------
+
+              Padding(
+                padding: const EdgeInsets.all(50),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        "Or Continue With",
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        child: Divider(
+                      thickness: 0.5,
+                      color: Colors.grey[400],
+                    ))
+                  ],
+                ),
+              ),
+
+              // -------------------- Square Auth Button --------------------
 
               // GoogleAuthentication --> kimlik doğrulama hizmeti.
               SquareAuthButton(
                 onTap: () => GoogleAuthentication().signInWithGoogle(),
-                imagePath: "assets/images/chat.png",
+                imagePath: "assets/images/google_icon.png",
               ),
 
+              const SizedBox(height: 30),
+              // -------------------- Register Now --------------------
+
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.only(bottom: 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -77,37 +113,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-/*  Widget loginButton(
-  BuildContext context,
-  GlobalKey<FormState> formkey,
-  String buttonText,
-) {
-  return GestureDetector(
-    onTap: () {
-      bool result = formkey.currentState!.validate();
-      if (result) {
-        formkey.currentState!.save();
-
-        Navigator.of(context).pushNamed("/home");
-
-        // Form geçerliyse, verileri gönderin.
-        // submit butonu ile backEnd'e kaydedip verileri göndereceğim.
-        // submit();
-      }
-    },
-    child: NeuBox(
-      width: AppScreenSize.screenSize(context).width * 0.8,
-      height: AppScreenSize.screenSize(context).height * 0.08,
-      child: Container(
-        child: Center(
-          child: Text(
-            buttonText,
-            style: AppTextStyle.body1,
-          ),
-        ),
-      ),
-    ),
-  );
-}
-  */

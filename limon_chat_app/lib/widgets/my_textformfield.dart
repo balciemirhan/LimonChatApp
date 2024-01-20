@@ -6,23 +6,23 @@ class MyTextFormField extends StatelessWidget {
   const MyTextFormField({
     Key? key,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     this.obscureText,
     this.controller,
     this.validator,
-    this.onSaved, this.keyboardType,
+    this.onSaved,
+    this.keyboardType,
   }) : super(key: key);
 
   final TextEditingController? controller;
-  final Icon prefixIcon;
+  final Icon? prefixIcon;
   final IconButton? suffixIcon;
   final String hintText;
   final bool? obscureText;
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
-  
 
   @override
   Widget build(BuildContext context) {

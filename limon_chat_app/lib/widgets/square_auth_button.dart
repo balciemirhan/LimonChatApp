@@ -12,12 +12,13 @@ class SquareAuthButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: NeuBox(
-        width: 50,
-        height: 50,
+        width: 70,
+        height: 70,
         child: Container(
           child: Center(
             child: Image(
               image: AssetImage(imagePath),
+              height: 40,
             ),
           ),
         ),

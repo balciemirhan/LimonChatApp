@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAuthentication {
-  Future<dynamic> signInWithGoogle() async {
+  /*  ------ GoogleSignIn ------ */
+
+  Future<UserCredential> signInWithGoogle() async {
     // begin interactive sign in process --->
     // e posta seçmeme olanak tanıyacak.
     final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
@@ -10,13 +12,13 @@ class GoogleAuthentication {
     // obtaiin auth details from request --->
     // e postayı içe aktarma
     // kimlik doğrulama ==> gAuth
-    final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+    final GoogleSignInAuthentication? gAuth = await gUser?.authentication;
 
     // create a new credential for user --->
     // işlem tamamlandıktan sonra kimlik bilgisi oluşturalım.
     final credential = GoogleAuthProvider.credential(
-      accessToken: gAuth.accessToken, // erişim belirteci
-      idToken: gAuth.idToken, // kimlik belirteci
+      accessToken: gAuth?.accessToken, // erişim belirteci
+      idToken: gAuth?.idToken, // kimlik belirteci
     );
 
     // finally, lets sign in --->
@@ -25,6 +27,12 @@ class GoogleAuthentication {
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
 
-    // en son işlem firebase tarafında kimlik doğrulama ve imzalama.
+    // en son işlem firebase tarafında parmak izi
+  }
+
+  /*  ------ GoogleSignOut ------ */
+
+  Future signOut() async {
+    return await GoogleSignIn().signOut();
   }
 }

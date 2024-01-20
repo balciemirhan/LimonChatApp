@@ -13,7 +13,7 @@ class AuthButton extends StatelessWidget {
 
   final GlobalKey<FormState> formKey;
   final String buttonString;
-  final Future<void> Function(BuildContext context) auth;
+  final Future<void> Function() auth;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,7 +21,7 @@ class AuthButton extends StatelessWidget {
         bool result = formKey.currentState!.validate();
         if (result) {
           formKey.currentState!.save();
-          auth(context);
+          auth();
 
           // Form geçerliyse, verileri gönderin.
           // submit butonu ile backEnd'e kaydedip verileri göndereceğim.

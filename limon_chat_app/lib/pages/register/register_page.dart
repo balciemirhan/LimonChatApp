@@ -55,13 +55,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   RegisterForm(formkey: formKey),
-
-                  /*    Padding(
-                    padding: EdgeInsets.only(
-                        top: AppScreenSize.screenSize(context).height / 8),
-                    child: LoginButton(
-                        formkey: formKey, buttonText: "SDJKFBIYUSDF"),
-                  ), */
+                  
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Row(

@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:limon_chat_app/auth/auth_service.dart';
+
 import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
 import 'package:limon_chat_app/config/constant/themes/text.dart';
+
 import 'package:limon_chat_app/widgets/auth_button.dart';
 import 'package:limon_chat_app/widgets/my_textformfield.dart';
+import 'package:limon_chat_app/widgets/snackbar_widget.dart';
 
 // formu güğncellemek için StatefulWidget olmak zorunda
 class RegisterForm extends StatefulWidget {
@@ -16,6 +19,15 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+  }
+
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
@@ -24,62 +36,22 @@ class _RegisterFormState extends State<RegisterForm> {
       TextEditingController();
 
   // register method
-  Future<void> register(BuildContext context) async {
+
+  Future register(context) async {
     // kayıt düğmesine tıkladığımızda yapmak istediklerimiz:
     // get auth service:
 
-    final AuthService authService = AuthService();
+    String message;
 
-// şifremiz ve onaylanmış olan şifremiz eşleşirse o zaman kayıt olma işlemi gerçekleşsin.:
-    // Kontrol et: Parola ile onay parolası eşleşiyor mu?
-    if (passwordController.text == confirmPasswordController.text) {
-      // Kontrol et: Parola en az 8 karakter uzunluğunda mı?
-      if (passwordController.text.length >= 8) {
-        try {
-          // Firebase üzerinde kullanıcı oluştur
-          authService.createUserWithEmailAndPassword(
-              emailController.text, passwordController.text);
-
-          // Başarılı olursa, kullanıcıyı giriş veya kayıt ekranına yönlendir
-          Navigator.of(context).pushNamed("/loginOrRegister");
-        } catch (e) {
-          // Hata durumunda kullanıcıya hatayı göster
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(e.toString()),
-            ),
-          );
-        }
-      } else {
-        // Parola 8 karakterden kısa ise kullanıcıya uyarı göster
-        showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-            title: Text(
-              "Password must be at least 8 characters long!",
-              style: TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        );
-      }
-    } else {
-      // Parolalar eşleşmiyorsa kullanıcıya uyarı göster
-      showDialog(
-        context: context,
-        builder: (context) => const AlertDialog(
-          title: Text(
-            "Passwords don't match!",
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+    if (passwordController.text.trim() ==
+        confirmPasswordController.text.trim()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
+    } else {
+      message = "Parolalar Eşleşmiyor";
+      return snackBarWidget(context, message);
     }
   }
 
@@ -133,7 +105,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 top: AppScreenSize.screenSize(context).height / 8),
             child: AuthButton(
                 formKey: widget.formkey,
-                auth: (context) => register(context),
+                auth: () => register(context),
                 buttonString: AppText.registerButtonTitle),
           )
         ],

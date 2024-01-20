@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:limon_chat_app/auth/auth_service.dart';
+import 'package:limon_chat_app/services/auth/auth_service.dart';
+import 'package:limon_chat_app/services/auth/google_authentication.dart';
 import 'package:limon_chat_app/config/constant/themes/mediaquery.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
   Future<void> logout(context) async {
+    /* final String loginMethod; */
     // Log out code here
     // get auth service
+
+    /* ------------ GoogleOut  ------------ */
+
+    final GoogleAuthentication authentication = GoogleAuthentication();
+    await authentication.signOut();
+
     final AuthService authService = AuthService();
     await authService.signOut(context);
-    /* Navigator.of(context).pushNamed("/login"); */
   }
 
   @override
@@ -48,7 +55,9 @@ class MyDrawer extends StatelessWidget {
             child: ListTile(
               title: const Text("S E T T İ N G S"),
               leading: const Icon(Icons.settings),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/settings');
+              },
             ),
           ),
           Padding(
